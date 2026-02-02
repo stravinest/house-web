@@ -18,8 +18,7 @@ import { UserComparisonChart } from '@/components/charts/user-comparison-chart';
 import { YearlyTrendChart } from '@/components/charts/yearly-trend-chart';
 import { BudgetProgressChart } from '@/components/charts/budget-progress-chart';
 import { format } from 'date-fns';
-import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { MainLayout } from '@/components/layout';
 
 export default function StatisticsPage() {
   const { user } = useAuthStore();
@@ -77,11 +76,11 @@ export default function StatisticsPage() {
 
   return (
     <ProtectedRoute>
-      <div className='min-h-screen bg-surface p-8'>
-        <div className='max-w-7xl mx-auto'>
-          {/* 헤더 */}
-          <div className='flex items-center justify-between mb-6'>
-            <div>
+      <MainLayout>
+        <div className='bg-surface p-8 min-h-screen'>
+          <div className='max-w-7xl mx-auto'>
+            {/* 헤더 */}
+            <div className='mb-6'>
               <h1 className='text-3xl font-semibold text-on-surface'>
                 상세 통계
               </h1>
@@ -89,22 +88,12 @@ export default function StatisticsPage() {
                 {ledger?.name || '가계부'}
               </p>
             </div>
-            <div className='flex items-center gap-3'>
-              <ThemeToggle />
-              <Link
-                href='/dashboard'
-                className='px-6 py-3 bg-surface-container border border-outline rounded-xl hover:bg-surface-container-highest transition-colors text-on-surface'
-              >
-                대시보드로
-              </Link>
-            </div>
-          </div>
 
-          {/* 필터 */}
-          <StatisticsFilters />
+            {/* 필터 */}
+            <StatisticsFilters />
 
-          {/* 차트 그리드 */}
-          <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+            {/* 차트 그리드 */}
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
             {/* 결제수단별 분석 */}
             <div className='lg:col-span-2 bg-surface-container rounded-2xl p-6 border border-outline-variant'>
               <h3 className='font-semibold text-on-surface mb-4'>
@@ -168,9 +157,10 @@ export default function StatisticsPage() {
                 )}
               </div>
             </div>
+            </div>
           </div>
         </div>
-      </div>
+      </MainLayout>
     </ProtectedRoute>
   );
 }

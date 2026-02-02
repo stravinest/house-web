@@ -15,8 +15,7 @@ import { createExcelFile } from '@/lib/excel/create-excel';
 import { createCsvFile } from '@/lib/csv/create-csv';
 import { createClient } from '@/lib/supabase/client';
 import { format } from 'date-fns';
-import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { MainLayout } from '@/components/layout';
 
 export default function ImportExportPage() {
   const { user } = useAuthStore();
@@ -167,11 +166,11 @@ export default function ImportExportPage() {
 
   return (
     <ProtectedRoute>
-      <div className='min-h-screen bg-surface p-8'>
-        <div className='max-w-7xl mx-auto'>
-          {/* 헤더 */}
-          <div className='flex items-center justify-between mb-6'>
-            <div>
+      <MainLayout>
+        <div className='bg-surface p-8 min-h-screen'>
+          <div className='max-w-7xl mx-auto'>
+            {/* 헤더 */}
+            <div className='mb-6'>
               <h1 className='text-3xl font-semibold text-on-surface'>
                 파일 관리
               </h1>
@@ -179,26 +178,16 @@ export default function ImportExportPage() {
                 Excel/CSV 업로드 및 다운로드
               </p>
             </div>
-            <div className='flex items-center gap-3'>
-              <ThemeToggle />
-              <Link
-                href='/dashboard'
-                className='px-6 py-3 bg-surface-container border border-outline rounded-xl hover:bg-surface-container-highest transition-colors text-on-surface'
-              >
-                대시보드로
-              </Link>
-            </div>
-          </div>
 
-          {/* 에러 메시지 */}
-          {error && (
-            <div className='mb-6 p-4 bg-expense/10 border border-expense/20 rounded-xl text-expense'>
-              {error}
-            </div>
-          )}
+            {/* 에러 메시지 */}
+            {error && (
+              <div className='mb-6 p-4 bg-expense/10 border border-expense/20 rounded-xl text-expense'>
+                {error}
+              </div>
+            )}
 
-          {/* 2분할 레이아웃 */}
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+            {/* 2분할 레이아웃 */}
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
             {/* 왼쪽: 파일 업로드 */}
             <div className='bg-surface-container rounded-2xl p-6 border border-outline-variant'>
               <h2 className='text-xl font-semibold text-on-surface mb-6'>
@@ -236,9 +225,10 @@ export default function ImportExportPage() {
 
               <DownloadOptions onDownload={handleDownload} />
             </div>
+            </div>
           </div>
         </div>
-      </div>
+      </MainLayout>
     </ProtectedRoute>
   );
 }
