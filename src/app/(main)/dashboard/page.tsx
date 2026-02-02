@@ -15,6 +15,7 @@ import {
 import { MonthlyTrendChart } from '@/components/charts/monthly-trend-chart';
 import { CategoryDonutChart } from '@/components/charts/category-donut-chart';
 import { RecentTransactions } from '@/components/dashboard/recent-transactions';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -87,9 +88,9 @@ export default function DashboardPage() {
             </div>
 
             {/* 로딩 상태 */}
-              {summaryLoading && (
+            {summaryLoading && (
               <div className='flex items-center justify-center py-12'>
-                <div className='w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin' />
+                <Spinner size='xl' label='데이터 로딩 중...' />
               </div>
             )}
 

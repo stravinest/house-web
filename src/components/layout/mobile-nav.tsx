@@ -90,10 +90,10 @@ export function MobileNav({ onSignOut }: MobileNavProps) {
       {isOpen && (
         <>
           <div
-            className='lg:hidden fixed inset-0 bg-black/50 z-40 top-[60px]'
+            className='lg:hidden fixed inset-0 bg-black/50 z-40 top-[60px] animate-fade-in'
             onClick={() => setIsOpen(false)}
           />
-          <div className='lg:hidden fixed top-[60px] left-0 right-0 bottom-0 bg-surface-container z-50 overflow-y-auto'>
+          <div className='lg:hidden fixed top-[60px] left-0 right-0 bottom-0 bg-surface-container z-50 overflow-y-auto animate-slide-down'>
             <nav className='p-4 space-y-2'>
               {navItems.map((item) => {
                 const Icon = item.icon;

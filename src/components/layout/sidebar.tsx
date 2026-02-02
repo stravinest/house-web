@@ -38,10 +38,10 @@ export function Sidebar({ onSignOut }: SidebarProps) {
   ];
 
   return (
-    <div className='flex flex-col h-full bg-surface-container border-r border-outline-variant'>
+    <nav className='flex flex-col h-full bg-surface-container border-r border-outline-variant' aria-label='메인 네비게이션'>
       {/* 로고 */}
       <div className='p-6 border-b border-outline-variant'>
-        <Link href='/dashboard' className='flex items-center gap-3'>
+        <Link href='/dashboard' className='flex items-center gap-3' aria-label='대시보드로 이동'>
           <div className='w-10 h-10 bg-primary rounded-lg flex items-center justify-center'>
             <svg
               className='w-6 h-6 text-white'
@@ -62,13 +62,13 @@ export function Sidebar({ onSignOut }: SidebarProps) {
       </div>
 
       {/* 네비게이션 */}
-      <nav className='flex-1 p-4 space-y-2'>
+      <div className='flex-1 p-4 space-y-2'>
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
 
           return (
-            <Link key={item.href} href={item.href}>
+            <Link key={item.href} href={item.href} aria-current={isActive ? 'page' : undefined}>
               <div
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors',
@@ -77,13 +77,13 @@ export function Sidebar({ onSignOut }: SidebarProps) {
                     : 'text-on-surface hover:bg-surface-container-highest'
                 )}
               >
-                <Icon className='w-5 h-5' />
+                <Icon className='w-5 h-5' aria-hidden='true' />
                 <span>{item.label}</span>
               </div>
             </Link>
           );
         })}
-      </nav>
+      </div>
 
       {/* 하단 액션 */}
       <div className='p-4 border-t border-outline-variant space-y-3'>
@@ -101,6 +101,6 @@ export function Sidebar({ onSignOut }: SidebarProps) {
           </Button>
         )}
       </div>
-    </div>
+    </nav>
   );
 }

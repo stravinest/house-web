@@ -31,10 +31,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             error && 'border-destructive focus:border-destructive focus:ring-destructive/20',
             className
           )}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${inputId}-error` : undefined}
           {...props}
         />
         {error && (
-          <p className='mt-1 text-sm text-destructive'>{error}</p>
+          <p id={`${inputId}-error`} className='mt-1 text-sm text-destructive' role='alert'>
+            {error}
+          </p>
         )}
       </div>
     );

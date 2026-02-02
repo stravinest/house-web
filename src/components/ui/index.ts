@@ -12,3 +12,4 @@ export {
 export { Badge, type BadgeProps } from './badge';
 export { Spinner, type SpinnerProps } from './spinner';
 export { EmptyState, type EmptyStateProps } from './empty-state';
+export { ErrorMessage, type ErrorMessageProps } from './error-message';

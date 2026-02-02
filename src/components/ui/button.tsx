@@ -49,9 +49,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         disabled={disabled || isLoading}
+        aria-busy={isLoading}
+        aria-disabled={disabled || isLoading}
         {...props}
       >
-        {isLoading && <Loader2 className='w-4 h-4 animate-spin' />}
+        {isLoading && <Loader2 className='w-4 h-4 animate-spin' aria-hidden='true' />}
         {children}
       </button>
     );
