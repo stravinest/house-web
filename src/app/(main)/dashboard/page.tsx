@@ -8,6 +8,7 @@ import { signOut } from '@/lib/supabase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getDefaultLedger } from '@/lib/supabase/ledger-repository';
+import { Button } from '@/components/ui/button';
 import {
   getMonthSummary,
   getMonthlyTrend,
@@ -97,24 +98,15 @@ export default function DashboardPage() {
             </div>
             <div className='flex items-center gap-3'>
               <ThemeToggle />
-              <Link
-                href='/statistics'
-                className='px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl transition-colors font-medium'
-              >
-                상세 통계
+              <Link href='/statistics'>
+                <Button variant='primary'>상세 통계</Button>
               </Link>
-              <Link
-                href='/import-export'
-                className='px-6 py-3 bg-surface-container border border-outline rounded-xl hover:bg-surface-container-highest transition-colors text-on-surface'
-              >
-                파일 관리
+              <Link href='/import-export'>
+                <Button variant='secondary'>파일 관리</Button>
               </Link>
-              <button
-                onClick={handleSignOut}
-                className='px-6 py-3 bg-surface-container border border-outline rounded-xl hover:bg-surface-container-highest transition-colors text-on-surface'
-              >
+              <Button variant='secondary' onClick={handleSignOut}>
                 로그아웃
-              </button>
+              </Button>
             </div>
           </div>
 
