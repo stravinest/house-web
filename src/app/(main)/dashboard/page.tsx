@@ -4,11 +4,8 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ProtectedRoute } from '@/components/protected-route';
 import { useAuthStore } from '@/stores/auth-store';
-import { signOut } from '@/lib/supabase/auth';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { getDefaultLedger } from '@/lib/supabase/ledger-repository';
-import { Button } from '@/components/ui/button';
+import { MainLayout } from '@/components/layout';
 import {
   getMonthSummary,
   getMonthlyTrend,
@@ -18,20 +15,12 @@ import {
 import { MonthlyTrendChart } from '@/components/charts/monthly-trend-chart';
 import { CategoryDonutChart } from '@/components/charts/category-donut-chart';
 import { RecentTransactions } from '@/components/dashboard/recent-transactions';
-import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function DashboardPage() {
-  const { user, clear } = useAuthStore();
-  const router = useRouter();
+  const { user } = useAuthStore();
   const [currentDate] = useState(() => new Date());
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1;
-
-  const handleSignOut = async () => {
-    await signOut();
-    clear();
-    router.push('/login');
-  };
 
   // 가계부 조회
   const { data: ledger } = useQuery({
@@ -84,11 +73,11 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div className='min-h-screen bg-surface p-8'>
-        <div className='max-w-7xl mx-auto'>
-          {/* 헤더 */}
-          <div className='flex items-center justify-between mb-8'>
-            <div>
+      <MainLayout>
+        <div className='bg-surface p-8 min-h-screen'>
+          <div className='max-w-7xl mx-auto'>
+            {/* 헤더 */}
+            <div className='mb-8'>
               <h1 className='text-3xl font-semibold text-on-surface'>
                 대시보드
               </h1>
@@ -96,29 +85,16 @@ export default function DashboardPage() {
                 {ledger?.name || '가계부'} • {currentYear}년 {currentMonth}월
               </p>
             </div>
-            <div className='flex items-center gap-3'>
-              <ThemeToggle />
-              <Link href='/statistics'>
-                <Button variant='primary'>상세 통계</Button>
-              </Link>
-              <Link href='/import-export'>
-                <Button variant='secondary'>파일 관리</Button>
-              </Link>
-              <Button variant='secondary' onClick={handleSignOut}>
-                로그아웃
-              </Button>
-            </div>
-          </div>
 
-          {/* 로딩 상태 */}
-          {summaryLoading && (
-            <div className='flex items-center justify-center py-12'>
-              <div className='w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin' />
-            </div>
-          )}
+            {/* 로딩 상태 */}
+              {summaryLoading && (
+              <div className='flex items-center justify-center py-12'>
+                <div className='w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin' />
+              </div>
+            )}
 
-          {/* 요약 카드 */}
-          {!summaryLoading && summary && (
+            {/* 요약 카드 */}
+            {!summaryLoading && summary && (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-8'>
               {/* 수입 카드 */}
               <div className='bg-gradient-to-br from-income/10 to-income/5 rounded-2xl p-6 border border-income/20'>
@@ -204,10 +180,10 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-          )}
+            )}
 
-          {/* 차트 영역 */}
-          <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8'>
+            {/* 차트 영역 */}
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8'>
             {/* 월별 추이 차트 */}
             <div className='lg:col-span-2 bg-surface-container rounded-2xl p-6 border border-outline-variant'>
               <h3 className='font-semibold text-on-surface mb-4'>월별 추이</h3>
@@ -237,10 +213,10 @@ export default function DashboardPage() {
                 )}
               </div>
             </div>
-          </div>
+            </div>
 
-          {/* 최근 거래 */}
-          <div className='bg-surface-container rounded-2xl p-6 border border-outline-variant'>
+            {/* 최근 거래 */}
+            <div className='bg-surface-container rounded-2xl p-6 border border-outline-variant'>
             <h3 className='font-semibold text-on-surface mb-4'>최근 거래</h3>
             {recentTransactions ? (
               <RecentTransactions transactions={recentTransactions} />
@@ -249,9 +225,10 @@ export default function DashboardPage() {
                 로딩 중...
               </div>
             )}
+            </div>
           </div>
         </div>
-      </div>
+      </MainLayout>
     </ProtectedRoute>
   );
 }
